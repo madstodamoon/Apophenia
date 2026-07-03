@@ -123,7 +123,9 @@ html {
   .variable-logo {
     position: absolute;
     top: -19vh;
-    left: 5vw;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
     z-index: 10000;
     mix-blend-mode: overlay;
     font-family: "apophenia";
