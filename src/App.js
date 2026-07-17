@@ -2,11 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import "./styles.css";
 import Player from "@vimeo/player";
 import Logo from "./images/Apophenia_LogoA_White.png";
+import Poster from "./images/poster.jpg";
 
 export default function App() {
   const iframeRef = useRef(null);
   const playerRef = useRef(null);
   const [soundOn, setSoundOn] = useState(false);
+  const [ready, setReady] = useState(false);
   const [cursor, setCursor] = useState({ x: -200, y: -200 });
 
   useEffect(() => {
@@ -18,6 +20,20 @@ export default function App() {
     playerRef.current = player;
     // Keep muted until the visitor opts in (required for autoplay).
     player.setMuted(true);
+
+    // Reveal (blur -> sharp) once the video is actually painting frames, so
+    // Vimeo's black-screen spinner is never seen. Several signals + a safety
+    // timeout so we never get stuck hidden.
+    const reveal = () => setReady(true);
+    const onTime = (data) => {
+      if (data && data.seconds > 0) {
+        reveal();
+        player.off("timeupdate", onTime);
+      }
+    };
+    player.on("timeupdate", onTime);
+    player.on("play", reveal);
+    setTimeout(reveal, 4000);
   }, []);
 
   const enableSound = () => {
@@ -39,7 +55,7 @@ export default function App() {
   };
 
   return (
-    <div className={`app ${soundOn ? "sound-on" : ""}`}>
+    <div className={`app ${soundOn ? "sound-on" : ""} ${ready ? "ready" : ""}`}>
       <div className="vimeo-wrapper">
         <iframe
           ref={iframeRef}
@@ -50,6 +66,10 @@ export default function App() {
           allowFullScreen
         ></iframe>
       </div>
+
+      {/* Blurred first-frame poster covers Vimeo's loading spinner, then fades
+          out as the video sharpens into view. */}
+      <img className="poster" src={Poster} alt="" aria-hidden="true" />
 
       <div className="logo">
         <img
