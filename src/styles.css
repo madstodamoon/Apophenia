@@ -13,6 +13,11 @@
   src: url("fonts/Programme-Primitiv.otf") format("opentype");
 }
 
+@font-face {
+  font-family: Programme-Regular;
+  src: url("fonts/Programme-Regular.otf") format("opentype");
+}
+
 a {
   font-family: Programme-Primitiv, sans-serif;
   color: white;
@@ -145,22 +150,22 @@ html {
   position: fixed;
   inset: 0;
   z-index: 15000;
-  cursor: pointer;
+  cursor: none;
 }
 
 /* "Click for sound" label that trails the cursor on pointer devices. */
 .cursor-hint {
   position: fixed;
   z-index: 20000;
-  transform: translate(18px, 12px);
+  transform: translate(-50%, -50%);
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
+  text-align: center;
   color: white;
-  font-family: Programme-Primitiv, sans-serif;
+  font-family: Programme-Regular, sans-serif;
   font-size: 15px;
   letter-spacing: 0.06em;
-  text-transform: uppercase;
   mix-blend-mode: difference;
 }
 
@@ -175,10 +180,9 @@ html {
   user-select: none;
   white-space: nowrap;
   color: white;
-  font-family: Programme-Primitiv, sans-serif;
+  font-family: Programme-Regular, sans-serif;
   font-size: 15px;
   letter-spacing: 0.06em;
-  text-transform: uppercase;
   mix-blend-mode: difference;
 }
 
