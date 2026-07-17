@@ -135,3 +135,61 @@ html {
     cursor: pointer;
   }
 }
+
+/* SOUND HINT */
+
+/* Transparent full-screen layer above the video that captures the first
+   click (to unmute) and tracks the cursor for the hint. Sits above the
+   variable-logo (z 10000) but below the hint label. */
+.sound-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 15000;
+  cursor: pointer;
+}
+
+/* "Click for sound" label that trails the cursor on pointer devices. */
+.cursor-hint {
+  position: fixed;
+  z-index: 20000;
+  transform: translate(18px, 12px);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  color: white;
+  font-family: Programme-Primitiv, sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  mix-blend-mode: difference;
+}
+
+/* Static fallback for touch devices (no cursor to follow). */
+.tap-hint {
+  position: fixed;
+  z-index: 20000;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  color: white;
+  font-family: Programme-Primitiv, sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  mix-blend-mode: difference;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tap-hint {
+    display: none;
+  }
+}
+
+@media (hover: none) {
+  .cursor-hint {
+    display: none;
+  }
+}
